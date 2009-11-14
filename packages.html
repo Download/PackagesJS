@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Packages JS &laquo; Unobtrusive Javascript</title>
+	<style type="text/css">.syntax{font-size:120%; margin:1em 0 1em 0;}</style>
+	<link rel="stylesheet" href="http://s3.wordpress.com/wp-content/themes/pub/cutline/style.css?m=1228974504b" type="text/css" media="screen" />
+	<link rel='stylesheet' href='http://s.wordpress.com/wp-content/themes/h4/global.css?m=1214319868b' type='text/css' />
+
+	<script type="text/javascript" src="packages.js"></script>
+	<script type="text/javascript" src="log/firebug.js"></script>
+	<!-- framework.protoype forms a drop-in replacement for lang.classes.
+	  Enable it and observe how lang/classes.js is no longer loaded. -->
+	<!-- script type="text/javascript" src="framework/prototype.js"></script -->
+
+	<!-- notice that you can enable or disable these script imports at will -->
+	<!-- script type="text/javascript" src="lang/classes.js"></script -->
+	<!-- script type="text/javascript" src="example/animals.js"></script -->
+	<!-- script type="text/javascript" src="util/url.js"></script -->
+	<!-- script type="text/javascript" src="dom/event.js"></script -->
+	<!-- script type="text/javascript" src="dom/selector.js"></script -->
+	<!-- script type="text/javascript" src="dom/behaviour.js"></script -->
+
+	<!-- top-level scripts -->
+	<script type="text/javascript" src="example/animaltest.js"></script>
+	<script type="text/javascript" src="example/behaviourtest.js"></script>
+	<script type="text/javascript" src="example/consoletest.js"></script>
+	<script type="text/javascript" src="example/eventtest.js"></script>
+	<script type="text/javascript" src="example/urltest.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="masthead"><h1><a href="http://packagesinjavascript.wordpress.com">Modular Javascript with Packages JS</a></h1></div>
+
+		<ul id="nav">
+			<li><a href="http://packagesinjavascript.wordpress.com">Front Page</a></li>
+			<li class="page_item page-item-35"><a href="http://packagesinjavascript.wordpress.com/about/" title="About">About</a></li>
+			<li class="page_item page-item-47"><a href="http://packagesinjavascript.wordpress.com/download/" title="Download">Download</a></li>
+			<li class="page_item page-item-36 current_page_item"><a href="http://packagesinjavascript.wordpress.com/documentation/" title="Documentation">Documentation</a></li>
+			<li class="page_item page-item-22"><a href="http://packagesinjavascript.wordpress.com/getting-started-guide/" title="Getting&nbsp;Started">Getting&nbsp;Started</a></li>
+		</ul>
+
+		<div id="header_img">
+			<img src="http://s2.wordpress.com/wp-content/themes/pub/cutline/images/header_1.jpg" width="770" height="140" alt="" />
+		</div>
+
+		<div id="content_box">
+
+			<div id="content" class="pages">
+
+				<div id="post-3" class="page hentry category-uncategorized post">
+
+				<h2>Packages JS</h2>
+				<div class="entry">
+					<p>One script, two functions, three steps to modular javascript.</p>
+
+					<h3>Packages in Javascript</h3>
+					<p class="extract">Packages JS provides modularity and scope management
+						  in javascript by allowing you to create packages that explicitly state
+						  their dependencies and the external objects they use through the
+						  function Package, and make created functions and objects/classes
+						  available for use by other packages through the function Export.</p>
+
+					<h3>Modular javascript in three steps</h3>
+					<ol>
+						<li><a href="http://packagesinjavascript.wordpress.com/download/"
+							>Download Packages JS</a> and include it in your page</li>
+						<li>Place your code in packages using <code>Package</code></li>
+						<li>Make functions and objects available to other packages using <code>Export</code></li>
+					</ol>
+
+			    <h3>Function package</h3>
+					<div class="synopsis">
+						<h6>SYNOPSIS</h6>
+						<div class="syntax"><code>
+							<strong>Package</strong>(<em>name</em> [, <em>dependencies</em>,
+									<em>callback</em>])
+						</code></div>
+						<dl class="arguments">
+							<dt><code>name</code></dt>
+							<dd>package name. Required. [String]</dd>
+							<dd>EG: <code>"mypackage"</code> or <code>"my.common.lib"</code>.</dd>
+							<dt><code>dependencies</code></dt>
+							<dd>Array with names of packages that your package depends on. Optional. [Array]</dd>
+							<dd>EG: <code>["lib1", "lib2"]</code></dd>
+							<dt><code>callback</code></dt>
+							<dd>Function to be called when the dependencies have been resolved.
+								Optional, required when dependencies are specified. [Function]</dd>
+							<dd>EG: <code>function(import1, import2) { /* inline function */ }</code></dd>
+							<dt><code>imports</code></dt>
+							<dd>You can import objects into the local scope by defining arguments
+									for the callback function with names matching those of objects
+									exported by packages in your dependencies list.</dd>
+						</dl>
+					</div>
+					<div class="examples">
+						<h6>EXAMPLES</h6>
+						<p>Example 1 (registration only)</p>
+						<code>
+							// code that needs to be in the global namespace<br/>
+							Package("my.package"); <br/>
+						</code><br/>
+						<p>Example 2 (no dependencies)</p>
+						<code>
+							// recommended form for code without dependencies<br/>
+							Package("my.package", [], function() {<br/>
+							&nbsp; // code here is in a local scope<br/>
+							&nbsp; function greet(){ alert("hello"); }<br/>
+							&nbsp; Export(greet); // make available to other packages<br/>
+							});<br/>
+						</code><br/>
+						<p>Example 3 (import dependencies)</p>
+						<code>
+							Package("other.package", ["my.package"], function(greet) {<br/>
+							&nbsp; // Use greet from my.package here.<br/>
+							&nbsp; greet(); // alerts 'hello' <br/>
+							});<br/>
+						</code>
+					</div>
+
+					<h3>Function Export</h3>
+					<h6>SYNOPSIS</h6>
+					<div class="synopsis">
+						<div class="syntax"><code>
+							<strong>Export</strong>(<em>obj</em>, [<em>name</em>])
+						</code></div>
+						<dl class="arguments">
+							<dt><code>obj</code></dt>
+							<dd>Object to export for use in other packages. Required. [Any]</dd>
+							<dd>EG: <code>Cat</code> or <code>myFunction</code></dd>
+							<dt><code>name</code></dt>
+							<dd>Name of the object to export. Required. [String]</dd>
+							<dd>EG: <code>"Cat"</code> or <code>"example.animals.Cat"</code></dd>
+							<dd>A fully qualified name consists of the package name and the object
+								name separated by a dot. This form can always be used and is convenient
+								for overriding the default location of the exported object, or for
+							  using this function from outside the context of a package callback.</dd>
+							<dd>Short names or no name at all can only be used if this function is
+								called from within the context of an executing package callback function
+								(i.e. from within your package). The object will be exported to your
+								package's scope. This is the recomended form.</dd>
+							<dd>When the name argument is not supplied, the one-class-per-file
+								form is assumed to be used. In this case the object is exported AT
+							  the package instead of IN it.</dd>
+						</dl>
+			    </div>
+
+					<h6>EXAMPLES</h6>
+					<div class="example">
+						<p>An object, function or class exported in one package...</p>
+						<code>
+							Package ("example.animals", ["lang.Class"], function(Class) {<br/>
+							&nbsp; var Cat = Class.create(..);<br/>
+							&nbsp; <em>Export</em>(Cat, "Cat");<br/>
+						});<br/>
+						</code><br/>
+						<p>...becomes available to other packages in the global scope, under it's
+							fully qualified name:</p>
+						<code>
+							Package("some.package", ["example.animals"], function() {<br/>
+							&nbsp; var Cat = <em>example.animals.Cat</em>;<br/>
+							&nbsp; var felix = new Cat("Felix");<br/>
+						});<br/>
+						</code><br/>
+						<p>...but can also be injected in the local scope by Packages JS:</p>
+						<code>
+							Package("other.package", ["example.animals"], function(<em>Cat</em>) {<br/>
+							&nbsp; var felix = new <em>Cat</em>("Felix");<br/>
+						});<br/>
+						</code><br/>
+						<p>In the code above, note how Cat is injected as an argument to the package
+							callback function.</p>
+						<p>If you leave out the optional name argument, the object will be exported
+							AT the package scope instead of IN it. This variation can only be used
+							from within the context of a package callback, and only once per package
+							(obviously). This syntax is convenient for creating a one-class-per-file
+							package structure:
+					  </p><code>Package("example.animals.<em>Dog</em>",["lang.Class"], function(Class){<br/>
+							&nbsp; var Dog = Class.Create({bark: function(){alert("woof");} });<br/>
+							&nbsp; Export(<em>Dog</em>); // no name param<br/>
+						});<br/></code>
+						<p>In the above example, Dog becomes available at example.animals.Dog,
+							not at example.animals.Dog.Dog, but can still be imported in the same
+							way as other exported objects:</p>
+						<code>
+							Package("any.package", [<em>"example.animals.Dog"</em>], function(<em>Dog</em>){<br/>
+							&nbsp; var lassie = new <em>Dog</em>("Lassie");<br/>
+							&nbsp; lassie.bark(); // alerts 'woof'<br/>
+							});<br/>
+						</code>
+					</div>
+
+					<h3>Packages included in the download</h3>
+					<p>These packages are not needed to use Packages JS. They serve as an example
+					and contain some functions that come in handy a lot. A lot of code in it is
+					written by other authors.</p>
+					<h5>log.firebug</h5>
+					<p>Before I do anything in Javascript, I like to have some way of logging
+						what is happening in my code. Fortunately it looks like a logging API
+						for javascript is finally emerging, based on an object named 'console'.
+						Both <a href="http://developer.apple.com/safari/library/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/UsingtheErrorConsole/chapter_4_section_4.html#//apple_ref/doc/uid/TP40007874-CH5-SW2"
+						>Safari</a> and <a href="http://getfirebug.com/console.html">Firefox</a>
+					  now support a common log API through console.log(), console.info(),
+					  console.warn() and console.error(). They are not fully compatible yet,
+					  but it's being <a href="http://webkit.org/blog/197/web-inspector-redesign/"
+					  >worked on</a>. Let us hope other browser vendors jump on the bandwagon
+					  so we may finally get native cross-browser javascript logging. Until that
+					  time, <a href="http://getfirebug.com/lite.html">Firebug Lite</a> will allow
+					  us to see our logging messages in other browsers.</p>
+					<p>The 'void' log console from firebugx is integrated into packages.js.
+						It's an empty console object that's included in browsers that have no
+						native console so you can safely use the console logging methods
+						cross-browser. If you actually want to see the log in other browsers,
+						include log.firebug on your page, like I did with this one. It's a
+						javascript implementation of the console that firefox and safari have.
+						Press F12 to open the console, it appears at the bottom of the page.</p>
+					<form action="">
+						<div>
+							<label for="logtext">Test the log: </label>
+							<input type="text" name="logtext" id="logtext" value="Log something..." />
+							<select name="loglevel" id="loglevel">
+								<option value="debug">debug</option>
+								<option value="info" selected="selected">info</option>
+								<option value="warning">warning</option>
+								<option value="error">error</option>
+							</select>
+							<button type="button" name="doLog" id="doLog">Log it</button>
+						</div>
+					</form>
+					<br/>
+
+					<h5>lang.Class</h5>
+					<p><a href="http://www.prototypejs.org/">Prototype</a>'s new class
+						framework is available separately in the package lang.Class. In
+						version 1.6, Protototype's class framework has become more
+						intuitive to use than in earlier versions. Learn more about it in
+						<a href="http://prototypejs.org/learn/class-inheritance"
+						>Mislav's tutorial</a>.</p>
+					<p>lang.Class is just the original code from prototype with slight
+						modifications to allow it to work stand-alone. But importantly, the
+						API is still compatible with Prototype's. So if you write a package
+						using lang.Class, that package will work without change on
+						Prototype. In fact, Prototype is bundled with Packages JS as
+					  framework.prototype, which forms a drop-in replacement for
+					  lang.Class.</p>
+
+					<h5>dom.event</h5>
+					<p>The dom.event package contains a compact version of the two cross-
+						browser event functions addEvent and removeEvent that have built-in
+						support for DOMContentLoaded, a non-standard but very usefull event
+						that fires before onload but after the document is ready. Inspired
+						by code from <a href="http://dean.edwards.name/weblog/2005/09/busted/"
+						>Dean Edwards</a>, <a
+						href="http://tanny.ica.com/ica/tko/tkoblog.nsf/dx/domcontentloaded-event-for-browsers"
+						>Tanny O'Haley</a> and the guys from <a href="http://prototypejs.org/"
+						>Prototype JS</a>.</p>
+
+					<h5>dom.Behaviour</h5>
+					<p>Use <a href="http://bennolan.com/">Ben Nolan</a>'s Behaviour module
+						to add behaviours transparently to your page.</p>
+					<p>Interestingly enough, when packaging dom.Behaviour I could
+						remove two thirds of the file by specifying dependencies on dom.event,
+						and dom.select. It shows how easy scripts collected from the internet
+						can be integrated into your codebase by using Packages JS.</p>
+					<span class="MessageBox">Click here for an alert</span> &nbsp; | &nbsp;
+					<span class="ToolTip" title="Look ma! No inline scripts in sight!"
+							>Mouseover here to change this text.</span><br/>
+					<br/>
+
+					<h5>dom.select</h5>
+					<p>dom.select contains Simon Willison's
+					<a href="http://simonwillison.net/2003/Mar/25/getElementsBySelector/"
+						>document.getElementsBySelector</a>, which allows you to query the
+						document for all elements matching a CSS selector. I renamed the
+						function "select" and added an Export statement for it, that's it.</p>
+
+					<h5>framework.prototype</h5>
+					<p>An unmodified version of <a href="http://www.prototypejs.org/"
+						>prototype</a> 1.6.0.3, except for a couple of	lines	added at the
+						end	that registers both lang.Class and framework.prototype, making
+						this package a drop-in replacement for lang.Class.</p>
+
+					<h5>net.QueryString</h5>
+					<p>Class that helps inspecting and manipulating QueryStrings.</p>
+
+					<h5>net.URL</h5>
+					<p>Class that helps inspecting and manipulating URL's. Uses
+						net.QueryString.</p>
+					<p>Check the log for the results of inspecting some test url's.</p>
+
+					<h5>example.animals</h5>
+					<p>Example of what can be done with lang.Class. Creates classes
+						Animal, Cat and Mouse that extend Animal and HouseCat which extends
+						Cat. It then exports these classes for use in the package
+						example.animaltest.</p>
+
+					<h5>example.animaltest</h5>
+					<p>Puts the example animals to the test. Included on this page,
+						the example creates some animals and feeds them different kinds
+						of food. Check out the log console to see who likes what (or who!).</p>
+
+					<h5>example.behaviourtest</h5>
+					<p>Example of what can be done with dom.behaviour. Included on this page,
+						the example	creates an onclick and onmouover and onmouseout handlers.
+						See dom.behaviour for a live demo.</p>
+
+					<h5>example.consoletest</h5>
+					<p>Example that demonstrates the cross-browser log console. Included on
+						this page, the example writes the value in the textbox to the log
+						console, using the selected log level.</p>
+
+					<h5>example.eventtest</h5>
+					<p>Example that demonstrates cross-browser event functions addEvent and
+						removeEvent by attaching handlers to the "load" and "DOMContentLoaded"
+						events. Check the log for the results.</p>
+
+					<h5>example.urltest</h5>
+					<p>Example that demonstrates packages net.URL and net.QueryString.</p>
+					<br/>
+				</div>
+			</div>
+
+				<div class="clear"></div>
+
+			</div>
+
+			<div id="sidebar">
+				<ul class="sidebar_list">
+					<li class="widget">
+						<h2>Browse the packages</h2>
+						<ul>
+							<li><a href="dom/behaviour.js">dom.behaviour</a></li>
+							<li><a href="dom/event.js">dom.event</a></li>
+							<li><a href="dom/selector.js">dom.selector</a></li>
+							<li><a href="example/animals.js">example.animals</a></li>
+							<li><a href="example/animaltest.js">example.animaltest</a></li>
+							<li><a href="example/behaviourtest.js">example.behaviourtest</a></li>
+							<li><a href="example/consoletest.js">example.consoletest</a></li>
+							<li><a href="example/eventtest.js">example.eventtest</a></li>
+							<li><a href="example/greetingtest.js">example.greetingtest</a></li>
+							<li><a href="example/hello.js">example.hello</a></li>
+							<li><a href="example/urltest.js">example.urltest</a></li>
+							<li><a href="framework/prototype.js">framework.prototype</a></li>
+							<li><a href="lang/classes.js">lang.classes</a></li>
+							<li><a href="log/firebug.js">log.firebug</a></li>
+							<li><a href="packages.js">packages.js</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div id="footer">
+		   <p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img
+		    	alt="Creative Commons License" style="border-width:0"
+		    	src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br />
+		    <span>Packages JS</span> by <a rel="cc:attributionURL"
+		    	href="http://packagesinjavascript.wordpress.com/"
+		    >Stijn de Witt</a></p><br/>
+		   <p><small>Included packages all licensed under their own Open Source license,
+				please refer to their creator's websites</small></p><br/>
+			<p class="center"><a href='http://wordpress.com/' rel='generator'
+				>Blog at WordPress.com</a>. Theme: Cutline by <a
+					href="http://www.pearsonified.com/" rel="designer"
+				>Chris Pearson</a>.</p>
+		</div>
+	</div>
+</body>
+</html>
