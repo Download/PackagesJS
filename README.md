@@ -18,7 +18,7 @@ Features
   dependencies are resolved.
 * Small footprint: Both in API and in code size, Packages JS is small. It 
   exposes just three functions, Package, Export and Import, and the fully
-  documented source is just over 300 lines.
+  documented source is less than 300 lines.
 
 Example
 -------
