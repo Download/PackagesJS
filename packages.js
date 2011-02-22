@@ -110,7 +110,7 @@
 
 	// Implicit objects may be imported from any package
 	var implicit = {log: log};
-// --------------------------------private---------------------------------
+// --------------------------------private--------------------------------
 	
 	// State model for packages (sequential).
 	var INITIAL = "INITIAL", LOADING = "LOADING", LOADED = "LOADED", 
@@ -155,8 +155,7 @@
 	
 	function lookup(name, create) {
 		var result = Package.currentLoader.get(name);
-		if (create && !result)
-		{
+		if (create && !result) {
 			result = new Package(name);
 			Package.currentLoader.put(result);
 		}
@@ -189,15 +188,10 @@
 			var location = locate(pkg.name);
 			pkg.script = load(location);
 		}
-		
-		if (pkg.state == RESOLVED)
-			execute(pkg);
-
-		if (pkg.state == AVAILABLE) {
-			// Now that this package is available, it's dependants might be resolvable
+		if (pkg.state == RESOLVED)	execute(pkg);
+		if (pkg.state == AVAILABLE) 
 			for (var i=0, dep; dep=pkg.dependants[i]; i++) 
 				resolve(lookup(pkg.dependants[i]));
-		}
 	}
 
 	function execute(pkg) {
@@ -206,7 +200,6 @@
 		if (pkg.code) {
 			var orgContext = context;
 			context = pkg;
-			
 			// Gather the callback arguments amongst the dependencies' exported objects
 			var names = argumentNames(pkg.code);
 			for (var j=0,name; name=names[j]; j++) {
@@ -216,7 +209,6 @@
 					console.error("Package: Could not find any object named '" + name + "' " + 
 							"in the dependencies listed for package '" + pkg + "'.");
 			}
-			
 			// Execute the package callback
 			pkg.state = EXECUTING;
 			pkg.code.apply(pkg, args);
@@ -229,8 +221,7 @@
 		for (var i=0,s; s=document.getElementsByTagName("head")[0].childNodes[i]; i++) {
 			if (s.nodeName.toLowerCase() == "script") {
 				var idx = s.src.indexOf(url);
-				// Does the script point at url?
-				if ((idx >= 0) && (idx == s.src.length - url.length))
+				if ((idx >= 0) && (idx == s.src.length - url.length)) // Does the script point at url?
 					return s; // found it
 			}
 		}
@@ -270,14 +261,12 @@
 	
 	function argumentNames(fn) {
 	  var i, len, names = fn.toString().match(/^[\s\(]*function[^(]*\((.*?)\)/)[1].split(",");
-	  for (i=0, len=names.length; i<len; i++)
-		  names[i] = names[i].replace(/^\s+/, '').replace(/\s+$/, '');
+	  for (i=0, len=names.length; i<len; i++) names[i] = names[i].replace(/^\s+/, '').replace(/\s+$/, '');
 	  return len == 1 && !names[0] ? [] : names;
 	};
 	
 	function assign(obj, src) {
-		for (var key in src)
-			obj[key] = src[key];
+		for (var key in src) obj[key] = src[key];
 	}
 	
 	function mixin(obj, src) {
@@ -285,11 +274,8 @@
 	}
 	
   	// names of all methods in the Firebug log API
-	var logapi = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
-			"group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-	var voidconsole = {};
-	for (var i=0, name; name=logapi[i]; i++)
-		voidconsole[name] = function() {};
+	var voidconsole = {}, logapi = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+	for (var i=0, name; name=logapi[i]; i++) voidconsole[name] = function() {};
 	
 	function log() {
 		if (typeof window['console'] == "object" && typeof window.console['info'] == "function") 
