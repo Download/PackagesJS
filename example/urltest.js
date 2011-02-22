@@ -1,5 +1,5 @@
-﻿Package("example.urltest", ["net.URL","net.QueryString"], function(URL, QueryString) {
-	console.log("Testing URL's...");
+﻿Package("example.urltest", ["net.URL","net.QueryString"], function(URL, QueryString, log) {
+	log().info("Testing URL's...");
 
 	var testurls = [
 		new URL(location.href),
@@ -11,7 +11,7 @@
 
 	for (var i=0, len=testurls.length; i<len; i++) {
 		var url = testurls[i];
-	  console.log("url=\"" + url + "\";\n" +
+	  log().info("url=\"" + url + "\";\n" +
 			  	"url.protocol=" + url.protocol + ";\n" +
 			  	"url.user=" + url.user + ";\n" +
 			  	"url.domain=" + url.domain + ";\n" +

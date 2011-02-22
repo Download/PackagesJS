@@ -12,9 +12,9 @@
 Package("net.QueryString", ["lang.Class"], function(Class) {
 
 	/**
-	 * Represents a URL's queurystring.
+	 * Represents a URL's querystring.
 	 */
-	var QueryString = Class.create({
+	var QueryString = Class("QueryString", {
 		initialize: function(qs) {
 			this.symbol = "";
 			this.params = {};
@@ -62,8 +62,9 @@ Package("net.QueryString", ["lang.Class"], function(Class) {
 		 * result instanceof Array
 		 */
 		get: function(name, def) {
+			var undef;
 			var result = this.params[name];
-			return result != null ? result : (def != null ? def : null);
+			return result ? result : (def ? def : undef);
 		},
 
 		/**
@@ -112,7 +113,7 @@ Package("net.QueryString", ["lang.Class"], function(Class) {
 
     /**
      * Returns the String representation of this QueryString. If you created
-     * this object with an existing querystring and you din't set any
+     * this object with an existing querystring and you didn't set any
      * parameters, QueryString respects the original string and will return
      * it unchanged.
      */
@@ -130,6 +131,6 @@ Package("net.QueryString", ["lang.Class"], function(Class) {
 			return this.qs = this.symbol + parms.join("&");
 		}
 	});
-
-  Export(QueryString);
+	
+	Export(QueryString);
 });

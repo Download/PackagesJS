@@ -36,7 +36,7 @@
 
 */
 
-Package("dom.Behaviour", ["dom.event", "dom.select"], function(addEvent, select) {
+Package("dom.Behaviour", ["dom.event", "dom.Sizzle"], function(addEvent, Sizzle) {
 	var Behaviour = {
 		list : new Array,
 
@@ -49,7 +49,7 @@ Package("dom.Behaviour", ["dom.event", "dom.select"], function(addEvent, select)
 		apply: function(){
 			for (h=0; sheet=Behaviour.list[h]; h++){
 				for (selector in sheet){
-					list = select(selector);
+					list = Sizzle(selector);
 					if (!list) continue;
 					for (i=0; element=list[i]; i++)
 						sheet[selector](element);

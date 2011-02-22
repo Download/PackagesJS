@@ -6,11 +6,12 @@
  *
  * Observe how the classes that were exported by example.animals can be
  * imported into the local scope by using them as callback arguments, or
- * you can alias them to local variables.
+ * you can Import them into local variables.
  *
- * Copyright 2009 by Stijn de Witt, Some rights reserved.
+ * copyright     2011 by Stijn de Witt, some rights reserved.
+ * license       http://creativecommons.org/licenses/by/3.0/ 
  */
-Package("example.animaltest", ["example.animals"], function(Cat, Mouse) {
+Package("example.animaltest", ["example.animals"], function(Cat, Mouse, log) {
 	// function arguments for the callback with names that match objects
 	// exported by packages in the dependencies list are automagically
 	// populated with the exported objects by Packages JS
@@ -19,8 +20,8 @@ Package("example.animaltest", ["example.animals"], function(Cat, Mouse) {
 	var felix = new Cat("Felix");
 	var mickey = new Mouse("Mickey");
 
-	// Exported objects also become available under their package's scope
-	var HouseCat = example.animals.HouseCat;
+	// Exported objects can also be imported explicitly
+	var HouseCat = Import("example.animals.HouseCat");
 
 	var tom = new HouseCat("Tom");
 	var jerry = new Mouse("Jerry");

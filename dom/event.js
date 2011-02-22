@@ -3,12 +3,12 @@
  *
  * The well known cross-browser event routines addEvent and removeEvent, with
  * a small enhancement that enables cross-browser support for the
- * DOMContentLoaded pseudo-event introduced by Mozilla. This event is not (yet)
- * standardized through W3C, but it's now supported by all major browsers except
- * for Internet Explorer, which doesn't support DOM 2 Events at all. This
- * cross-browser implementation does support IE through some trickery.
+ * DOMContentLoaded pseudo-event introduced by Mozilla. This event is now being
+ * standardized by the W3C in HTML5, but is not yet supported by all browsers.
+ * This cross-browser implementation does support IE through some trickery.
  *
  * exports       addEvent, removeEvent
+ * copyright     2011 by Stijn de Witt, some rights reserved.
  * license       http://creativecommons.org/licenses/by/3.0/
  */
 Package("dom.event", [], function() {
@@ -21,7 +21,7 @@ Package("dom.event", [], function() {
    * event and queues them, firing once it's own central handler
    * which is implemented cross browser has fired.
    */
-  var addEvent = function(obj, evt, fn) {
+  function addEvent(obj, evt, fn) {
     if (obj == document && evt == "DOMContentLoaded") {
       // Support adding listeners for DOMContentLoaded event
       if (document.ready) fn.apply(obj, []);
@@ -39,7 +39,7 @@ Package("dom.event", [], function() {
    *
    * Removes an event from an object in a cross-browser way.
    */
-  var removeEvent = function(obj, evt, fn ) {
+  function removeEvent(obj, evt, fn ) {
   	if (obj == document && evt == "DOMContentLoaded") {
   		for (var i=addEvent.listeners.length-1; i>=0; i--)
   			if (addEvent.listeners[i] == fn)
@@ -107,6 +107,6 @@ Package("dom.event", [], function() {
     window.attachEvent("onload", fire);
   }
 
-  Export(addEvent, "addEvent");
-  Export(removeEvent, "removeEvent");
+  Export(addEvent);
+  Export(removeEvent);
 });

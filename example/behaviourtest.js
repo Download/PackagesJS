@@ -1,5 +1,5 @@
-﻿Package("example.behaviourtest", ["dom.event", "dom.Behaviour"], function(addEvent, Behaviour) {
-	console.log("Behaviour example: creating rules...");
+﻿Package("example.behaviourtest", ["dom.event", "dom.Behaviour"], function(addEvent, Behaviour, log) {
+	log().log("Behaviour example: creating rules...");
 	var rules = {
 		'.MessageBox' : function(element){
 			addEvent(element, "click", function(evt){
@@ -19,6 +19,6 @@
 		}
 	};
 
-	console.log("Behaviour example: registering rules...");
+	log().log("Behaviour example: registering rules...");
 	Behaviour.register(rules);
 });

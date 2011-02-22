@@ -6,11 +6,11 @@
  *
  * http://joe@site.com:80/home/faq/faq.php?command=search&keyword=hello#footer
  * \ _/   \_/ \__ ___/ \/\___ ____/\__ __/\   ^      ^     ^      ^   /\__ __/
- *	|       \    |      \    |        |    \ param value param value /   |
+ *	 |       \    |      \    |        |    \ param value param value /    |
  * protocol user domain port path   file    -------------|----------- reference
  *                                                    querystring
  *
- * Exports class URL
+ * Exports 		URL
  *
  * Inspired by code from Adam Vandenberg
  * http://adamv.com/dev/javascript/files/querystring.js
@@ -20,7 +20,7 @@ Package("net.URL", ["lang.Class", "net.QueryString"], function(Class, QueryStrin
   /**
    * Represents a URL.
    */
-	var URL = Class.create({
+	Export(Class("URL", {
 		initialize: function(url) {
 			this.protocol = "";
 			this.user = "";
@@ -29,7 +29,6 @@ Package("net.URL", ["lang.Class", "net.QueryString"], function(Class, QueryStrin
 			this.path = "";
 			this.file = "";
 			this.reference = "";
-			this.querystring = new QueryString("");
 
 			var sep = url.indexOf("?");
 			// Do we have a querystring indicator?
@@ -44,6 +43,9 @@ Package("net.URL", ["lang.Class", "net.QueryString"], function(Class, QueryStrin
 				this.querystring = new QueryString(qs);
 				url = url.substring(0, sep);
 			}
+			else
+				this.querystring = new QueryString("");
+			
 			sep = url.indexOf("://");
 			// Do we have a protocol indicator?
 			if (sep != -1) {
@@ -73,11 +75,9 @@ Package("net.URL", ["lang.Class", "net.QueryString"], function(Class, QueryStrin
 			}
 			// querystring, protocol and domain are chopped from url. All that's left is the path and file
 			sep = url.lastIndexOf('/');
-			if (sep != -1) {
-				if (url.indexOf('.', sep) != -1) {
-					this.file = url.substring(sep);
-					url = url.substring(0, sep);
-				}
+			if (sep != -1 && sep < url.length - 1) {
+				this.file = url.substring(sep + 1);
+				url = url.substring(0, sep + 1);
 			}
 			this.path = url;
 		},
@@ -89,11 +89,10 @@ Package("net.URL", ["lang.Class", "net.QueryString"], function(Class, QueryStrin
 			result += this.domain;
 			if (this.port != "") result += ":" + this.port;
 			result += this.path;
+			result += this.file;
 			result += this.querystring.toString();
 			if (this.reference != "") result += this.reference;
 			return result;
 		}
-	});
-
-  Export(URL);
+	}));
 });

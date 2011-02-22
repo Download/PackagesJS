@@ -1,17 +1,17 @@
-﻿Package("example.consoletest", ["dom.event", "dom.Behaviour"], function(addEvent, Behaviour) {
+﻿Package("example.consoletest", ["dom.event", "dom.Behaviour"], function(addEvent, Behaviour, log) {
 	var rules = {
 		'#doLog': function(element){
 			addEvent(element, "click", function(evt) {
 				var text = document.getElementById("logtext").value;
 				var level = document.getElementById("loglevel").value;
 				if (level == "error")
-					console.error(text);
+					log().error(text);
 				else if (level == "warning")
-					console.warn(text);
+					log().warn(text);
 				else if (level == "info")
-					console.info(text);
+					log().info(text);
 				else
-					console.log(text);
+					log().log(text);
 			});
 		}
 	};
