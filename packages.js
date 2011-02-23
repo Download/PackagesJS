@@ -278,7 +278,7 @@
 	for (var i=0, name; name=logapi[i]; i++) voidconsole[name] = function() {};
 	
 	function log() {
-		if (typeof window['console'] == "object" && typeof window.console['info'] == "function") 
+		if (typeof window['console'] == "object" && typeof window.console['info'] != "undefined") 
 			return console;
 		return voidconsole;
 	}
